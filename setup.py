@@ -15,7 +15,7 @@ setup(
     url='https://github.com/yzqin/hand_imitation.git',
     author="Xiaolong Wang's Lab",
     install_requires=[
-        'transforms3d', 'gym>=0.13', 'mujoco-py<2.1,>=2.0', 'numpy', 'imageio', 'pygifsicle', 'Pillow', 'open3d',
+        'transforms3d', 'gym>=0.13', 'numpy', 'imageio', 'pygifsicle', 'Pillow', 'open3d',
         'scipy', 'trimesh'
     ],
 )

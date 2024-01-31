@@ -5,18 +5,20 @@
 import argparse
 import pickle
 import sys
-
+import torch 
 import gym.logger
 
 from hand_imitation.env.environments.mug_place_object_env import MugPlaceObjectEnv
 from hand_imitation.env.environments.mug_pour_water_env import WaterPouringEnv
 from hand_imitation.env.environments.ycb_relocate_env import YCBRelocate
 
+
 from mjrl.algos.behavior_cloning import BC
 from mjrl.algos.dapg import DAPG
 from mjrl.algos.density_onpg import DensityONPG
 from mjrl.algos.soil import SOIL
 from mjrl.algos.trpo import TRPO
+from mjrl.algos.iqlearn import IQLearn
 from mjrl.baselines.mlp_baseline import MLPBaseline
 from mjrl.policies.gaussian_mlp import MLP
 from mjrl.utils.train_agent import train_agent
@@ -87,7 +89,7 @@ def train():
 
     # Load the demos
     demo_paths = None
-    if cfg.BC_INIT or cfg.USE_DAPG or cfg.USE_DENSITY_ONPG or cfg.SOIL.ENABLED:
+    if cfg.BC_INIT or cfg.USE_DAPG or cfg.USE_DENSITY_ONPG or cfg.SOIL.ENABLED or cfg.USE_IQLEARN:
         with open(cfg.DEMO_FILE, 'rb') as f:
             demo_paths = list(pickle.load(f).values())
             num_traj = len(demo_paths)
@@ -141,6 +143,11 @@ def train():
             normalized_step_size=0.1, seed=cfg.RNG_SEED,
             save_logs=True
         )
+    elif cfg.USE_IQLEARN:
+        print('using IQ_LEARN for RL algo')
+        agent = IQLearn(spec, policy, baseline, demo_paths=demo_paths,
+                         alpha=1e-3, gamma=0.99, seed=cfg.RNG_SEED, save_logs=True)
+                         
     else:
         print('using TRPO for RL algo')
         agent = TRPO(

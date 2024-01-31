@@ -1,0 +1,9 @@
+BC_INIT: false
+DEMO_FILE: ../demonstrations/relocate-mug.pkl
+ENV_NAME: relocate-mug-0.8
+JOB_DIR: ./training_log
+JOB_NAME: trpo
+NUM_ITER: 2000
+RNG_SEED: 200
+USE_IQLEARN: true
+

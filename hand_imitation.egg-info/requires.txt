@@ -1,0 +1,9 @@
+transforms3d
+gym>=0.13
+numpy
+imageio
+pygifsicle
+Pillow
+open3d
+scipy
+trimesh
