@@ -1,6 +1,7 @@
 import xml.etree.ElementTree as ET
 
 import numpy as np
+import torch
 
 from hand_imitation.env.environments.base import MujocoEnv
 from hand_imitation.env.models import TableArena
@@ -31,6 +32,10 @@ class YCBRelocate(MujocoEnv):
         self.act_rng = 0.5 * (self.mjpy_model.actuator_ctrlrange[:, 1] - self.mjpy_model.actuator_ctrlrange[:, 0])
 
     def _pre_action(self, action, policy_step=False):
+        
+        if torch.is_tensor(action):
+            action = action.detach().cpu().numpy()
+        
         action = np.clip(action, -1.0, 1.0)
         action = self.act_mid + action * self.act_rng  # mean center and scale
         self.sim.data.ctrl[:] = action

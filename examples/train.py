@@ -24,6 +24,8 @@ from mjrl.policies.gaussian_mlp import MLP
 from mjrl.utils.train_agent import train_agent
 from tpi.core.config import assert_cfg, cfg
 
+import multiprocessing
+multiprocessing.set_start_method('spawn', force=True)
 
 class Spec:
     def __init__(self, env=None, env_name="relocate-mug-1"):
