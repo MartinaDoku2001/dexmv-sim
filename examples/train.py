@@ -7,6 +7,7 @@ import pickle
 import sys
 import torch 
 import gym.logger
+gym.logger.set_level(40)
 
 from hand_imitation.env.environments.mug_place_object_env import MugPlaceObjectEnv
 from hand_imitation.env.environments.mug_pour_water_env import WaterPouringEnv
