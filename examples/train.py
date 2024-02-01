@@ -156,11 +156,11 @@ def train():
             spec, policy, baseline,
             normalized_step_size=0.1, seed=cfg.RNG_SEED,
             save_logs=True)
-
+        
     # Train the agent
     print('==== Training with RL ====')
 
-    if cfg.SOIL.ENABLED or cfg.USE_DENSITY_ONPG or cfg.GASIL.ENABLED or cfg.USE_DAPG:
+    if cfg.SOIL.ENABLED or cfg.USE_DENSITY_ONPG or cfg.GASIL.ENABLED or cfg.USE_DAPG or cfg.USE_IQLEARN:
         env_name = cfg.ENV_NAME
         task = env_name.split('-')[0]
         obj = env_name.split('-')[1]
@@ -180,6 +180,9 @@ def train():
         job_name = f'gail_{cfg.ENV_NAME}_{demo_property}_{cfg.DEMO_RATIO}{job_label}_seed{cfg.RNG_SEED}'
     elif cfg.USE_DAPG:
         job_name = f'dapg_{cfg.ENV_NAME}_{demo_property}_{cfg.DAPG_LAM0}_{cfg.DEMO_RATIO}{job_label}_seed{cfg.RNG_SEED}'
+    elif cfg.USE_IQLEARN:
+        job_name = f'iq_learn_{cfg.ENV_NAME}_{demo_property}_{job_label}_seed{cfg.RNG_SEED}'
+    
     else:
         job_name = f'rl_{cfg.ENV_NAME}{job_label}_seed{cfg.RNG_SEED}'
 
